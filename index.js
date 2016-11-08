@@ -13,11 +13,17 @@ class Navbar extends Component {
 
         this.handleScroll = this.handleScroll.bind(this);
 
-        window.addEventListener('scroll', this.handleScroll);
-
         this.state = {
           fixed: false
         };
+    }
+
+    componentDidMount() {
+        return this.listener = window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount() {
+        return window.removeEventListener('scroll', this.listener);
     }
 
     handleScroll(e) {
