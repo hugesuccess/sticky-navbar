@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Navigation from '../navigation';
 
 import './navbar.css';
 
@@ -19,6 +18,7 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
+        this.breakpoint = this.navbar.offsetTop + this.navbar.offsetHeight;
         return this.listener = window.addEventListener('scroll', this.handleScroll);
     }
 
@@ -27,10 +27,8 @@ class Navbar extends Component {
     }
 
     handleScroll(e) {
-      const break_point = (location.pathname === '/') ? 680 : 312;
-
-      this.setState({
-        fixed: (window.scrollY > break_point) ? true : false
+      return this.setState({
+        fixed: (window.scrollY > this.breakpoint) ? true : false
       });
     }
 
@@ -38,9 +36,9 @@ class Navbar extends Component {
         var fixed = (this.state.fixed) ? "fixed" : "";
 
         return (
-            <div id="navbar" className={fixed}>
+            <div id="navbar" className={fixed} ref={(div) => this.navbar = div}>
                 <div className="col-12">
-                    <Navigation type="navbar" />
+                    {this.props.children}
                 </div>
             </div>
         );
